@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "postinstall": "cd ./game && yarn && yarn build:web && cd .. && cp -R ./game/web-build/* ./public && cd public && mv index.html crossy.html",
+    "postinstall": "cd ./game && yarn && yarn build:web && cd .. && cp -R ./game/web-build/* ./public && cd public && mv index.html crossy.html && cd ..",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
