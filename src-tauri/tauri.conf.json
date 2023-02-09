@@ -33,7 +33,7 @@
         "icons/icon.icns",
         "icons/icon.ico"
       ],
-      "identifier": "com.gerard.klops",
+      "identifier": "com.gerardszulc.dev",
       "longDescription": "",
       "macOS": {
         "entitlements": null,
