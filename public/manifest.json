@@ -1,0 +1,10 @@
+{
+  "background_color": "#87C6FF",
+  "display": "standalone",
+  "lang": "en",
+  "name": "Bouncy Bacon",
+  "short_name": "Bouncy Bacon",
+  "start_url": "/?utm_source=web_app_manifest",
+  "theme_color": "#87C6FF",
+  "orientation": "portrait"
+}

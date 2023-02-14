@@ -59,11 +59,9 @@
     },
     "windows": [
       {
-        "fullscreen": false,
-        "height": 600,
+        "fullscreen": true,
         "resizable": true,
-        "title": "crossy-roads-tauri",
-        "width": 800
+        "title": "crossy-roads-tauri"
       }
     ]
   }

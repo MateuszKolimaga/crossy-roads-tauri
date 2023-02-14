@@ -13,35 +13,35 @@ import Images from "../src/Images";
 
 //TODO: Make this dynamic
 const banner = [
-  {
-    color: "#3640eb",
-    title: "Get Updates Subscribe Now",
-    button: {
-      onPress: (_) => {
-        Alert.alert(
-          "Subscribe to our mailing list",
-          "Join our mailing list and discover the latest news from Expo and Evan Bacon.\n\n Read our privacy policy on https://github.com/EvanBacon/Expo-Crossy-Road/privacy.md",
-          [
-            { text: "Cancel", onPress: () => console.log("Cancel Pressed!") },
-            { text: "OK", onPress: () => console.log("OK Pressed!") },
-          ],
-          {
-            cancelable: false,
-          }
-        );
-      },
-      source: Images.button.mail,
-      style: { aspectRatio: 1.85, height: 40 },
-    },
-  },
+  // {
+  //   color: "#3640eb",
+  //   title: "Get Updates Subscribe Now",
+  //   button: {
+  //     onPress: (_) => {
+  //       Alert.alert(
+  //         "Subscribe to our mailing list",
+  //         "Join our mailing list and discover the latest news from Expo and Evan Bacon.\n\n Read our privacy policy on https://github.com/EvanBacon/Expo-Crossy-Road/privacy.md",
+  //         [
+  //           { text: "Cancel", onPress: () => console.log("Cancel Pressed!") },
+  //           { text: "OK", onPress: () => console.log("OK Pressed!") },
+  //         ],
+  //         {
+  //           cancelable: false,
+  //         }
+  //       );
+  //     },
+  //     source: Images.button.mail,
+  //     style: { aspectRatio: 1.85, height: 40 },
+  //   },
+  // },
   {
     color: "#368FEB",
-    title: "Free Gift in 2h 51m",
+    title: "Game Over",
   },
-  {
-    color: "#36D6EB",
-    title: "44 Coins To Go",
-  },
+  // {
+  //   color: "#36D6EB",
+  //   title: "44 Coins To Go",
+  // },
 ];
 
 // const AnimatedBanner = Animated.createAnimatedComponent(Banner);

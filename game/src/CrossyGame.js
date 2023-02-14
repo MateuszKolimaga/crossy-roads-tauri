@@ -9,6 +9,7 @@ import Feathers from './Particles/Feathers';
 import Water from './Particles/Water';
 import Rows from './Row';
 import { Fill } from './Row/Grass';
+import SaveInfo from './SaveInfo';
 
 // TODO Add to state - disable/enable when battery is low
 const useParticles = true;
@@ -208,14 +209,52 @@ export class CrossyGameMap extends GameMap {
     }
   }
 
+  checkGround(hero, obj) {
+    if (Math.round(hero.position.z) == obj.position.z){
+      return true
+    } else {
+      return false
+    }
+  }
+
   tick(dt, hero) {
+    var ground_picked = false
+    for (const grass of this.grasses.items){
+      if (ground_picked === false) {
+        if (this.checkGround(hero, grass) === true) {
+          // console.log('TRAWA')
+          SaveInfo.SaveState.ground = "GRASS"
+          ground_picked = true
+        }
+      }
+    }
+
     for (const railRoad of this.railRoads.items) {
+      if (ground_picked === false) {
+        if (this.checkGround(hero, railRoad) === true) {
+          // console.log('TORY')
+          SaveInfo.SaveState.ground = "RAILROAD"
+          ground_picked = true
+        }
+      }
       railRoad.update(dt, hero);
     }
     for (const road of this.roads.items) {
+      if (ground_picked === false) {
+        if (this.checkGround(hero, road) === true) {
+          SaveInfo.SaveState.ground = "ROAD"
+          ground_picked = true
+        }
+      }
       road.update(dt, hero);
     }
     for (const water of this.water.items) {
+      if (ground_picked === false) {
+        if (this.checkGround(hero, water) === true) {
+          SaveInfo.SaveState.ground = "WATER"
+          ground_picked = true
+        }
+      }
       water.update(dt, hero);
     }
   }

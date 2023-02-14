@@ -19,6 +19,9 @@ import {
   sceneColor,
   startingRow,
 } from "./GameSettings";
+import SaveInfo from './SaveInfo';
+import axios, * as others from 'axios';
+
 
 const initialState = {
   id: Characters.bacon.id,
@@ -103,12 +106,34 @@ export default class Engine {
 
     this.camCount = 0;
 
+    this.player_positions_x = []
+    this.moving_records = []
+    this.previouse_timestamp = Math.floor(Date.now() / 100)
+
     this.gameMap.reset();
 
     this._hero.idle();
     this.gameMap.init();
 
     this.onGameReady();
+  };
+
+  addToPlayerPositionQueue = (element) => {
+    if (this.player_positions_x.length === 3) {
+      this.player_positions_x.shift();
+    }
+    this.player_positions_x.push(element);
+  };
+
+  addToMovingQueue = (element) => {
+    if (this.moving_records.length === 4) {
+      this.moving_records.shift();
+    }
+    this.moving_records.push(element);
+  };
+
+  areElementsInListUnique = list => {
+    return new Set(list).size === list.length;
   };
 
   // Move scene forward
@@ -147,6 +172,45 @@ export default class Engine {
     // this.drive();
 
     this.gameMap.tick(dt, this._hero);
+   
+    if ( SaveInfo.SaveState.ground === 'WATER'){
+      if (this.areElementsInListUnique(this.player_positions_x)) {
+        SaveInfo.SaveState.place = 'WOOD'
+      } else {
+        SaveInfo.SaveState.place = 'LEAF'
+      }
+    } else {
+      SaveInfo.SaveState.place =  SaveInfo.SaveState.ground
+    }
+    SaveInfo.SaveState.player_position_x = parseInt(this._hero.position.x.toFixed(4)) + 6
+    SaveInfo.SaveState.player_position_z = parseInt(this._hero.position.z.toFixed(4))
+
+    if (this.moving_records.includes(true)){
+      SaveInfo.SaveState.place = 'AIR'
+    }
+    this.addToPlayerPositionQueue(this._hero.position.x)
+    this.addToMovingQueue(this._hero.moving)
+    if (this._hero.isAlive && !(this._hero.position.z < this.camera.position.z - 1) && !(this._hero.position.x < -5 || this._hero.position.x > 5)){
+      const current_timestamp = Math.floor(Date.now() / 100)
+      if (current_timestamp - this.previouse_timestamp > 0.1){
+        const data = {
+          timestamp: Math.floor(Date.now() / 100),
+          player_position_x: SaveInfo.SaveState.player_position_x,
+          player_position_z: SaveInfo.SaveState.player_position_z,
+          player_place: SaveInfo.SaveState.place,
+        };
+        console.log(data)
+        axios.post('http://localhost:3000/', data)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+          this.previouse_timestamp = current_timestamp
+      }
+      
+    }
 
     if (!this._hero.moving) {
       this._hero.moveOnEntity();
